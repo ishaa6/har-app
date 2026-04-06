@@ -1,0 +1,46 @@
+.panel { display: flex; flex-direction: column; gap: 20px; }
+
+.dropzone {
+  border: 2px dashed var(--border-b); border-radius: var(--r-lg);
+  background: var(--surface); padding: 48px 24px;
+  text-align: center; cursor: pointer; transition: all 220ms var(--ease);
+  position: relative; overflow: hidden;
+}
+.dropzone::before {
+  content: ''; position: absolute; inset: 0;
+  background: var(--accent-dim); opacity: 0; transition: opacity 220ms;
+}
+.dropzone:hover::before, .dropzone.dragover::before { opacity: 1; }
+.dropzone:hover, .dropzone.dragover { border-color: var(--accent); box-shadow: 0 0 40px var(--accent-dim); }
+.dropzone.has-file { border-style: solid; border-color: rgba(0,229,255,0.4); padding: 24px; }
+
+.dz-empty { position: relative; z-index: 1; }
+.dz-icon  { font-size: 42px; color: var(--text-3); margin-bottom: 14px; transition: color 220ms; }
+.dropzone:hover .dz-icon { color: var(--accent); }
+.dz-label { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 6px; }
+.dz-sub   { font-family: var(--font-mono); font-size: 11px; color: var(--text-3); letter-spacing: 1px; text-transform: uppercase; }
+
+.file-info  { display: flex; flex-direction: column; align-items: center; gap: 8px; position: relative; z-index: 1; }
+.file-icon  { font-size: 30px; color: var(--accent); }
+.file-name  { font-family: var(--font-mono); font-size: 14px; color: var(--text); word-break: break-all; }
+.file-size  { font-family: var(--font-mono); font-size: 11px; color: var(--text-2); }
+
+.preview-wrap { display: flex; flex-direction: column; gap: 10px; }
+.preview-video { width: 100%; border-radius: var(--r); border: 1px solid var(--border); background: #000; display: block; }
+
+.action-btn {
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  width: 100%; padding: 16px; border: none; border-radius: var(--r);
+  background: var(--accent); color: #000;
+  font-family: var(--font-body); font-size: 15px; font-weight: 700;
+  cursor: pointer; transition: all 220ms var(--ease);
+}
+.action-btn:hover:not(:disabled) { box-shadow: 0 0 40px var(--accent-glow); transform: translateY(-1px); }
+.action-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+.action-btn.loading { background: var(--surface-2); color: var(--text-2); cursor: wait; }
+
+.spinner {
+  display: inline-block; width: 16px; height: 16px;
+  border: 2px solid rgba(255,255,255,0.2); border-top-color: var(--text);
+  border-radius: 50%; animation: spin 0.7s linear infinite; flex-shrink: 0;
+}

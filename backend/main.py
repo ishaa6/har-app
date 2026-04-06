@@ -9,6 +9,7 @@ import subprocess
 
 from preprocess import preprocess_video
 from model import TwoStreamHybrid  
+import torch.nn.functional as F
 
 app = FastAPI()
 
@@ -72,10 +73,14 @@ async def predict(file: UploadFile = File(...)):
         output = model(input_tensor)
 
     prediction = torch.argmax(output, dim=1).item()
+    probs = F.softmax(output, dim=1)
+
     prediction_label = LABELS[prediction]
+    confidence = probs[0][prediction].item()
 
     return {
-        "prediction": prediction_label
+        "prediction": prediction_label,
+        "confidence": confidence
     }
 
 @app.post("/predict-frame")
@@ -112,8 +117,14 @@ async def predict_frame(data: dict):
             output = model(tensor)
 
         prediction = torch.argmax(output, dim=1).item()
+        probs = F.softmax(output, dim=1)
+
+        confidence = probs[0][prediction].item()
         prediction_label = LABELS[prediction]
 
-        return {"prediction": prediction_label}
+        return {
+            "prediction": prediction_label,
+            "confidence": confidence
+        }
 
     return {"prediction": "Collecting frames..."}

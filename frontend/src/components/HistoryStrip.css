@@ -1,0 +1,21 @@
+.history-strip { margin-top: 28px; display: flex; flex-direction: column; gap: 12px; }
+
+.hs-scroll {
+  display: flex; gap: 10px; overflow-x: auto; padding-bottom: 6px;
+  scrollbar-width: thin; scrollbar-color: var(--surface-3) transparent;
+}
+.hs-scroll::-webkit-scrollbar { height: 4px; }
+.hs-scroll::-webkit-scrollbar-track { background: transparent; }
+.hs-scroll::-webkit-scrollbar-thumb { background: var(--surface-3); border-radius: 2px; }
+
+.hs-chip {
+  flex-shrink: 0; display: flex; flex-direction: column; gap: 4px;
+  background: var(--surface); border: 1px solid var(--border);
+  padding: 10px 14px; border-radius: var(--r); min-width: 140px;
+  transition: border-color 220ms var(--ease);
+}
+.hs-chip:hover { border-color: var(--border-b); }
+.hs-chip.chip-anomaly { border-color: rgba(255,61,87,0.3); background: rgba(255,61,87,0.05); }
+
+.chip-name { font-family: var(--font-mono); font-size: 11px; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.chip-conf { font-family: var(--font-display); font-size: 20px; line-height: 1; }

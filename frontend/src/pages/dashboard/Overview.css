@@ -1,0 +1,75 @@
+/* ── Shared dashboard styles (imported by Overview, used across all pages) ── */
+
+.dash-page { display: flex; flex-direction: column; gap: 20px; animation: panel-in 0.35s var(--spring) both; }
+
+/* ── KPI Row ── */
+.kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+
+.kpi-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--r-lg); padding: 20px 16px;
+  position: relative; overflow: hidden;
+  animation: panel-in 0.4s var(--spring) both;
+  transition: border-color 220ms var(--ease);
+}
+.kpi-card:hover { border-color: var(--border-b); }
+.kpi-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: var(--kc, var(--accent));
+}
+.kpi-icon  { font-size: 18px; color: var(--kc, var(--accent)); margin-bottom: 10px; display: block; }
+.kpi-val   { font-family: var(--font-display); font-size: 36px; color: var(--text); line-height: 1; }
+.kpi-unit  { font-size: 18px; margin-left: 2px; }
+.kpi-label { font-family: var(--font-mono); font-size: 10px; color: var(--text-2); letter-spacing: 1.5px; text-transform: uppercase; margin-top: 6px; }
+.kpi-bar   { position: absolute; bottom: 0; left: 0; height: 3px; background: var(--kc, var(--accent)); opacity: 0.4; border-radius: 0 2px 0 0; transition: width 1s var(--spring); }
+
+/* ── Dash Card ── */
+.dash-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 24px; }
+.card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+.card-title  { font-size: 15px; font-weight: 700; color: var(--text); }
+.card-badge  { font-family: var(--font-mono); font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-2); background: var(--surface-2); padding: 4px 10px; border-radius: 100px; }
+
+/* ── Histogram ── */
+.histogram { display: flex; align-items: flex-end; gap: 8px; height: 140px; padding: 0 8px; position: relative; }
+.hist-col  { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 8px; height: 100%; }
+.hist-bar-wrap { flex: 1; width: 100%; display: flex; align-items: flex-end; }
+.hist-bar  { width: 100%; border-radius: 4px 4px 0 0; position: relative; min-height: 4px; transition: height 0.8s var(--spring); }
+.hist-count { position: absolute; top: -20px; left: 50%; transform: translateX(-50%); font-family: var(--font-mono); font-size: 11px; color: var(--text-2); }
+.hist-label { font-family: var(--font-mono); font-size: 9px; color: var(--text-3); letter-spacing: 0.5px; text-align: center; }
+.hist-threshold { position: absolute; top: 0; bottom: 24px; display: flex; flex-direction: column; align-items: center; }
+.thresh-line   { width: 1px; flex: 1; background: rgba(245,197,24,0.5); }
+.thresh-marker { font-family: var(--font-mono); font-size: 9px; color: var(--yellow); margin-top: 4px; }
+
+/* ── Two-column layout ── */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+/* ── Donut ── */
+.donut-wrap   { display: flex; align-items: center; gap: 20px; }
+.donut-svg    { width: 130px; flex-shrink: 0; }
+.donut-legend { display: flex; flex-direction: column; gap: 10px; flex: 1; }
+.legend-row   { display: flex; align-items: center; gap: 8px; }
+.legend-dot   { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.legend-name  { font-family: var(--font-mono); font-size: 11px; color: var(--text-2); flex: 1; }
+.legend-val   { font-family: var(--font-display); font-size: 18px; color: var(--text); }
+
+/* ── Category bars ── */
+.cat-bars { display: flex; flex-direction: column; gap: 14px; }
+.cat-row  { display: flex; align-items: center; gap: 10px; }
+.cat-name  { font-family: var(--font-mono); font-size: 11px; color: var(--text-2); width: 90px; flex-shrink: 0; }
+.cat-track { flex: 1; height: 6px; background: var(--surface-2); border-radius: 3px; overflow: hidden; }
+.cat-fill  { height: 100%; border-radius: 3px; transition: width 0.8s var(--spring); }
+.cat-count { font-family: var(--font-display); font-size: 18px; color: var(--text); width: 28px; text-align: right; }
+
+/* ── Sparkline ── */
+.sparkline-wrap { display: flex; flex-direction: column; gap: 10px; }
+.sparkline-svg  { width: 100%; height: 80px; overflow: visible; }
+.spark-labels   { display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 10px; color: var(--text-3); }
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .kpi-row { grid-template-columns: 1fr 1fr; }
+  .two-col { grid-template-columns: 1fr; }
+}
+@media (max-width: 400px) {
+  .kpi-row { grid-template-columns: 1fr; }
+}

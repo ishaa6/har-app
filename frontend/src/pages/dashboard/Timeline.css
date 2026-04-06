@@ -1,0 +1,77 @@
+/* ── Filters ── */
+.tl-filters {
+  display: flex; gap: 8px; flex-wrap: wrap;
+}
+.tl-filter-btn {
+  padding: 9px 18px; border-radius: 100px;
+  border: 1px solid var(--border-b); background: var(--surface);
+  color: var(--text-2); font-family: var(--font-mono);
+  font-size: 11px; letter-spacing: 1px; cursor: pointer;
+  transition: all 220ms var(--ease);
+}
+.tl-filter-btn:hover         { color: var(--text); border-color: var(--accent); background: var(--accent-dim); }
+.tl-filter-btn.active        { background: var(--accent); color: #000; border-color: var(--accent); }
+.tl-filter-btn.fil-anomaly.active { background: var(--red); border-color: var(--red); }
+
+/* ── Timeline ── */
+.timeline { display: flex; flex-direction: column; gap: 0; max-height: 600px; overflow-y: auto; padding-right: 4px; }
+.timeline::-webkit-scrollbar { width: 4px; }
+.timeline::-webkit-scrollbar-track { background: transparent; }
+.timeline::-webkit-scrollbar-thumb { background: var(--surface-3); border-radius: 2px; }
+
+.tl-entry {
+  display: flex; gap: 16px;
+  animation: panel-in 0.35s var(--spring) both;
+}
+
+/* Spine */
+.tl-spine  { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; width: 20px; }
+.tl-dot    {
+  width: 14px; height: 14px; border-radius: 50%;
+  border: 2px solid var(--text-3); background: var(--bg);
+  flex-shrink: 0; transition: border-color 0.3s, box-shadow 0.3s;
+  margin-top: 14px;
+}
+.tl-line   { flex: 1; width: 2px; background: var(--border); min-height: 16px; }
+
+/* Card */
+.tl-card {
+  flex: 1; background: var(--surface-2);
+  border: 1px solid var(--border); border-left: 3px solid var(--tc, var(--accent));
+  border-radius: var(--r); padding: 14px 16px; margin-bottom: 10px;
+  transition: border-color 220ms, background 220ms;
+}
+.tl-card:hover { background: var(--surface-3); }
+
+.tl-card-top {
+  display: flex; justify-content: space-between; align-items: baseline;
+  margin-bottom: 8px;
+}
+.tl-activity { font-size: 14px; font-weight: 700; color: var(--text); }
+.tl-conf     { font-family: var(--font-display); font-size: 22px; line-height: 1; }
+
+.tl-conf-bar {
+  height: 3px; background: rgba(255,255,255,0.06); border-radius: 2px;
+  overflow: visible; position: relative; margin-bottom: 10px;
+}
+.tl-conf-fill  { height: 100%; border-radius: 2px; transition: width 0.6s var(--spring); }
+.tl-thresh-mark {
+  position: absolute; top: -4px; width: 2px; height: 11px;
+  background: rgba(245,197,24,0.6); border-radius: 1px;
+}
+
+.tl-card-bot  { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.tl-group     { font-family: var(--font-mono); font-size: 10px; letter-spacing: 1px; text-transform: uppercase; }
+.tl-time      { font-family: var(--font-mono); font-size: 10px; color: var(--text-3); margin-left: auto; }
+.tl-anom-tag  {
+  font-family: var(--font-mono); font-size: 9px; letter-spacing: 1px;
+  color: var(--red); background: rgba(255,61,87,0.12);
+  border: 1px solid rgba(255,61,87,0.25); padding: 2px 8px; border-radius: 4px;
+}
+
+/* Empty */
+.tl-empty {
+  display: flex; align-items: center; gap: 12px; justify-content: center;
+  padding: 40px; color: var(--text-3);
+  font-family: var(--font-mono); font-size: 12px; letter-spacing: 1px;
+}
