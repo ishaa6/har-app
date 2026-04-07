@@ -13,6 +13,8 @@ from preprocess import preprocess_video
 from model import TwoStreamHybrid  
 from download_weights import download_all
 
+print("🚀 Starting backend...")
+
 app = FastAPI()
 
 frame_buffer = []
@@ -39,15 +41,20 @@ app.add_middleware(
 
 device = torch.device("cpu")
 
+print("⬇️ Downloading weights...")
 download_all()
+print("✅ Download complete")
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 MODEL_PATH = os.path.join(BASE_DIR, "files", "model.pth")
 
+print("🧠 Initializing model...")
 model = TwoStreamHybrid(num_classes=len(LABELS))
 
+print("📦 Loading model weights...")
 state_dict = torch.load(MODEL_PATH, map_location=device)
 model.load_state_dict(state_dict)
+print("✅ Model loaded successfully")
 
 model.to(device)
 model.eval()
