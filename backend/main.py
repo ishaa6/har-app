@@ -6,10 +6,12 @@ import base64
 import numpy as np
 import cv2
 import subprocess
+import os
+import torch.nn.functional as F
 
 from preprocess import preprocess_video
 from model import TwoStreamHybrid  
-import torch.nn.functional as F
+from download_weights import download_all
 
 app = FastAPI()
 
@@ -34,11 +36,17 @@ app.add_middleware(
 )
 
 # ---------------- MODEL LOADING ----------------
+
 device = torch.device("cpu")
 
-model = TwoStreamHybrid(num_classes=len(LABELS))  # ✅ match your classes
+download_all()
 
-state_dict = torch.load("files/model.pth", map_location=device)
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+MODEL_PATH = os.path.join(BASE_DIR, "files", "model.pth")
+
+model = TwoStreamHybrid(num_classes=len(LABELS))
+
+state_dict = torch.load(MODEL_PATH, map_location=device)
 model.load_state_dict(state_dict)
 
 model.to(device)
