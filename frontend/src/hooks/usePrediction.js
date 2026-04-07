@@ -21,7 +21,7 @@ export function usePrediction(threshold) {
   const runPrediction = async (formData) => {
     setLoading(true);
     try {
-      const res  = await axios.post("http://127.0.0.1:8000/predict", formData);
+      const res  = await axios.post("https://har-backend-3jp7.onrender.com/predict", formData);
       const pred = res.data.prediction;
       const conf = res.data.confidence ?? 0.72;
       setResult(pred);

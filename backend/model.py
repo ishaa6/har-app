@@ -6,6 +6,7 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 from torch.utils.data import Dataset, DataLoader
+import os
 
 from pytorch_i3d import InceptionI3d
 
@@ -33,9 +34,15 @@ class TwoStreamHybrid(nn.Module):
         self.flow_i3d = InceptionI3d(400, in_channels=2)
         
         # Load Pre-trained Weights (setting weights_only=True disables security warnings)
-        self.rgb_i3d.load_state_dict(torch.load('files/rgb_imagenet.pt', weights_only=True))
-        self.flow_i3d.load_state_dict(torch.load('files/flow_imagenet.pt', weights_only=True))
         
+        BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+        rgb_path = os.path.join(BASE_DIR, "files", "rgb_imagenet.pt")
+        flow_path = os.path.join(BASE_DIR, "files", "flow_imagenet.pt")
+
+        self.rgb_i3d.load_state_dict(torch.load(rgb_path, map_location="cpu"))
+        self.flow_i3d.load_state_dict(torch.load(flow_path, map_location="cpu"))
+
         # Remove the final classification layers from I3D to extract raw features
         self.rgb_i3d.replace_logits(1024)
         self.flow_i3d.replace_logits(1024)
@@ -50,26 +57,6 @@ class TwoStreamHybrid(nn.Module):
             nn.Dropout(0.5),
             nn.Linear(1024, num_classes)
         )
-
-    # def forward(self, rgb, flow):
-    #     # Extract features
-    #     rgb_feat = self.rgb_i3d.extract_features(rgb)
-    #     flow_feat = self.flow_i3d.extract_features(flow)
-        
-    #     # Global Average Pooling across spatial dimensions (H, W)
-    #     rgb_feat = torch.mean(rgb_feat, dim=[3, 4])   
-    #     flow_feat = torch.mean(flow_feat, dim=[3, 4]) 
-        
-    #     # Concatenate Streams & Permute for LSTM
-    #     fused_feat = torch.cat((rgb_feat, flow_feat), dim=1).permute(0, 2, 1)
-        
-    #     # Pass through BiLSTM and Attention
-    #     lstm_out, _ = self.bilstm(fused_feat)
-    #     context, attn_weights = self.attention(lstm_out)
-        
-    #     # Final Classification
-    #     logits = self.classifier(context)
-    #     return logits
 
     def forward(self, rgb, flow=None):
         # --- RGB stream only ---
