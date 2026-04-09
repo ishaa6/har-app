@@ -1,5 +1,4 @@
 import React from "react";
-import { GROUP_COLORS } from "../../data/actions";
 import "./Overview.css";
 import "./Anomalies.css";
 
